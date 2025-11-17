@@ -69,17 +69,23 @@
         </div>
 
         <div id="resultsCard" class="a-tab-hidden mt-8 bg-blue-50 border-l-4 border-blue-500 p-6 rounded-lg shadow-inner">
-            <h2 class="text-2xl font-semibold text-blue-800 mb-4">Your Viva Voce Details</h2>
+            
+            <h2 class="text-2xl font-semibold text-blue-800 mb-4 flex items-center">
+                <i class="fas fa-check-circle text-green-500 mr-3"></i>
+                Viva Examination Details
+            </h2>
             
             <div class="space-y-2 mb-4 border-b border-blue-200 pb-4">
                 <div>
-                    <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wider">Your Course</h3>
-                    <p id="resultCourse" class="text-lg font-medium text-gray-900"></p>
-                </div>
+                    <h3 class="flex items-center text-sm font-medium text-gray-500 uppercase tracking-wider">
+                        <i class="fas fa-graduation-cap fa-fw mr-2"></i> <span>Your Course</span>
+                    </h3>
+                    <p id="resultCourse" class="text-lg font-medium text-gray-900 pl-7"></p> </div>
                 <div>
-                    <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wider">Your College</h3>
-                    <p id="resultCollege" class="text-lg font-medium text-gray-900"></p>
-                </div>
+                    <h3 class="flex items-center text-sm font-medium text-gray-500 uppercase tracking-wider">
+                        <i class="fas fa-school fa-fw mr-2"></i> <span>Your College</span>
+                    </h3>
+                    <p id="resultCollege" class="text-lg font-medium text-gray-900 pl-7"></p> </div>
             </div>
             <div class="space-y-3">
                 <div>
@@ -102,12 +108,12 @@
             <div class="mt-6 border-t border-blue-200 pt-4">
                 <p class="text-sm text-blue-700">
                     <b>Note:</b> Always confirm dates and centers with your respective college/center administration.
-                </p>
+                </T>
                 <p id="result-branding" class="text-xs text-blue-600 italic mt-3">
                     Powered by University Updates
                 </p>
             </div>
-            </div>
+        </div>
         <div id="errorCard" class="a-tab-hidden mt-8 bg-red-50 border-l-4 border-red-500 p-6 rounded-lg shadow-inner">
             <h2 class="text-xl font-semibold text-red-800 mb-2">Error</h2>
             <p id="errorMessage" class="text-red-700"></p>
@@ -182,7 +188,6 @@
         };
 
         // Get all DOM elements
-        // Changed: Added new elements
         const dom = {
             initialLoader: document.getElementById('initialLoader'),
             mainContent: document.getElementById('mainContent'),
@@ -199,7 +204,6 @@
             resultCenter: document.getElementById('resultCenter'),
             resultDate: document.getElementById('resultDate'),
             resultTime: document.getElementById('resultTime'),
-            // Added: New DOM elements
             headerBranding: document.getElementById('header-branding'),
             resultBranding: document.getElementById('result-branding'),
             resultCourse: document.getElementById('resultCourse'),
@@ -397,7 +401,6 @@
          * 5. Handle College Change
          * Finds and displays the final viva details.
          */
-        // Changed: Added logic to populate new result fields
         function handleCollegeChange() {
             const selectedCollege = dom.collegeSelect.value;
             const selectedSubjectCode = dom.subjectSelect.value;
@@ -412,11 +415,11 @@
             );
 
             if (result) {
-                // Added: Get selected text for course and college
+                // Get selected text for course and college
                 const selectedCourseText = dom.subjectSelect.options[dom.subjectSelect.selectedIndex].text;
                 const selectedCollegeText = dom.collegeSelect.options[dom.collegeSelect.selectedIndex].text;
 
-                // Added: Populate new confirmation fields
+                // Populate new confirmation fields
                 dom.resultCourse.textContent = selectedCourseText || 'N/A';
                 dom.resultCollege.textContent = selectedCollegeText || 'N/A';
                 
@@ -495,7 +498,7 @@
         }
         
         /**
-         * 7. Added: Update Live Date & Time
+         * 7. Update Live Date & Time
          * Updates the branding elements with the current date and time.
          */
         function updateLiveDateTime() {
@@ -526,7 +529,7 @@
             // Load all data
             loadAllData();
 
-            // Added: Set up live date/time
+            // Set up live date/time
             updateLiveDateTime();
             setInterval(updateLiveDateTime, 60000); // Update every minute
         });
