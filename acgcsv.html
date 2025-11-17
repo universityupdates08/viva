@@ -1487,7 +1487,9 @@
             document.getElementById('ac-course').textContent = course.toUpperCase();
             document.getElementById('ac-gender').textContent = gender.toUpperCase();
             document.getElementById('ac-collegeName').textContent = collegeName.toUpperCase();
-            document.getElementById_('ac-examinationCenter').textContent = examinationCenter.toUpperCase();
+            // --- THIS IS THE FIX ---
+            document.getElementById('ac-examinationCenter').textContent = examinationCenter.toUpperCase();
+            // --- END OF FIX ---
             document.getElementById('ac-subject').textContent = subject.toUpperCase();
             
             const semesterSuffix = (sem) => {
