@@ -4,8 +4,8 @@
     <meta charset="UTF-tab">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Viva Voce Center & Date Finder</title>
-    <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         /* Use Inter font */
         body {
@@ -15,51 +15,10 @@
         .a-tab-hidden {
             display: none;
         }
-        .result-title {
-                font-size: 1.5rem; 
-                margin-bottom: 10px;
-            }
-        .result-title {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 15px; 
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        }
-        #result-branding {
-                right: 15px;
-                bottom: 8px;
-                font-size: 0.65rem;
-            }
-            #result-note {
-                font-size: 0.7rem;
-                bottom: 25px; 
-                padding: 0 10px; 
-            }
-        #result-note {
-            position: absolute;
-            bottom: 35px; 
-            left: 0;
-            right: 0;
-            text-align: center;
-            font-size: 0.8rem; 
-            font-style: italic;
-            color: rgba(255, 255, 255, 0.85);
-            pointer-events: none;
-            padding: 0 20px; 
-        }
-        #result-branding {
-            position: absolute;
-            bottom: 10px; 
-            right: 20px;
-            font-size: 0.75rem; 
-            font-style: italic; 
-            color: rgba(255, 255, 255, 0.7); 
-            pointer-events: none; 
     </style>
 </head>
 <body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
 
-    <!-- Initial Loading Overlay -->
     <div id="initialLoader" class="text-center p-8">
         <svg class="animate-spin h-12 w-12 text-blue-600 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -68,21 +27,18 @@
         <p class="text-gray-600 text-lg mt-4">Loading all viva data...</p>
     </div>
 
-    <!-- Main Content Card (Initially hidden) -->
     <div id="mainContent" class="a-tab-hidden bg-white shadow-2xl rounded-xl p-6 md:p-10 w-full max-w-3xl">
         
-        <!-- Header -->
         <div class="text-center mb-8">
-            <h1 class="text-center flex items-center justify-center gap-2">
-                <i class="fas fa-search-location"></i> Viva Voce Center Finder
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800">
+                <i class="fas fa-search-location text-blue-600 mr-3"></i>Viva Voce Center Finder
             </h1>
-            <p class="text-lg text-gray-600 mt-2">Powered by University Updates</p>
+            <p class="text-lg text-gray-600 mt-2">Find your viva center, date, and time.</p>
+            <p id="header-branding" class="text-sm text-gray-500 italic mt-2">Powered by University Updates</p>
         </div>
 
-        <!-- Form Filters -->
         <div class="space-y-6">
 
-            <!-- 1. Select Course -->
             <div>
                 <label for="courseSelect" class="block text-sm font-medium text-gray-700 mb-1">1. Select Course</label>
                 <select id="courseSelect" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-150 ease-in-out">
@@ -92,60 +48,77 @@
                 </select>
             </div>
 
-            <!-- 2. Select Subject (Initially hidden) -->
             <div id="subjectGroup" class="a-tab-hidden">
                 <label for="subjectSelect" class="block text-sm font-medium text-gray-700 mb-1">2. Select Subject</label>
                 <select id="subjectSelect" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-150 ease-in-out">
-                    <!-- Options will be populated by JS -->
-                </select>
+                    </select>
             </div>
 
-            <!-- 3. Select District (Initially hidden) -->
             <div id="districtGroup" class="a-tab-hidden">
                 <label for="districtSelect" class="block text-sm font-medium text-gray-700 mb-1">3. Select District</label>
                 <select id="districtSelect" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-150 ease-in-out">
-                    <!-- Options will be populated by JS -->
-                </select>
+                    </select>
             </div>
 
-            <!-- 4. Select College (Initially hidden) -->
             <div id="collegeGroup" class="a-tab-hidden">
                 <label for="collegeSelect" class="block text-sm font-medium text-gray-700 mb-1">4. Select Your College</label>
                 <select id="collegeSelect" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-150 ease-in-out">
-                    <!-- Options will be populated by JS -->
-                </select>
+                    </select>
             </div>
 
         </div>
 
-        <!-- Results Card (Initially hidden) -->
         <div id="resultsCard" class="a-tab-hidden mt-8 bg-blue-50 border-l-4 border-blue-500 p-6 rounded-lg shadow-inner">
-             <p class="result-title"><i class="fas fa-check-circle"></i> Viva Examination Details</p>
+            <h2 class="text-2xl font-semibold text-blue-800 mb-4">Your Viva Voce Details</h2>
+            
+            <div class="space-y-2 mb-4 border-b border-blue-200 pb-4">
+                <div>
+                    <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wider">Your Course</h3>
+                    <p id="resultCourse" class="text-lg font-medium text-gray-900"></p>
+                </div>
+                <div>
+                    <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wider">Your College</h3>
+                    <p id="resultCollege" class="text-lg font-medium text-gray-900"></p>
+                </div>
+            </div>
             <div class="space-y-3">
                 <div>
-                    <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wider">Viva Center</h3>
-                    <p id="resultCenter" class="text-lg font-medium text-gray-900"></p>
-                </div>
+                    <h3 class="flex items-center text-sm font-medium text-gray-500 uppercase tracking-wider">
+                        <i class="fas fa-university fa-fw mr-2"></i> <span>Viva Center</span>
+                    </h3>
+                    <p id="resultCenter" class="text-lg font-medium text-gray-900 pl-7"></p> </div>
                 <div>
-                    <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wider">Date</h3>
-                    <p id="resultDate" class="text-lg font-medium text-gray-900"></p>
-                </div>
+                    <h3 class="flex items-center text-sm font-medium text-gray-500 uppercase tracking-wider">
+                        <i class="fas fa-calendar-alt fa-fw mr-2"></i> <span>Date</span>
+                    </h3>
+                    <p id="resultDate" class="text-lg font-medium text-gray-900 pl-7"></p> </div>
                 <div>
-                    <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wider">Time</h3>
-                    <p id="resultTime" class="text-lg font-medium text-gray-900"></p>
-                </div>
+                    <h3 class="flex items-center text-sm font-medium text-gray-500 uppercase tracking-wider">
+                        <i class="fas fa-clock fa-fw mr-2"></i> <span>Time</span>
+                    </h3>
+                    <p id="resultTime" class="text-lg font-medium text-gray-900 pl-7"></p> </div>
             </div>
-        </div>
 
-        <!-- Error Card (Initially hidden) -->
+            <div class="mt-6 border-t border-blue-200 pt-4">
+                <p class="text-sm text-blue-700">
+                    <b>Note:</b> Always confirm dates and centers with your respective college/center administration.
+                </p>
+                <p id="result-branding" class="text-xs text-blue-600 italic mt-3">
+                    Powered by University Updates
+                </p>
+            </div>
+            </div>
         <div id="errorCard" class="a-tab-hidden mt-8 bg-red-50 border-l-4 border-red-500 p-6 rounded-lg shadow-inner">
             <h2 class="text-xl font-semibold text-red-800 mb-2">Error</h2>
             <p id="errorMessage" class="text-red-700"></p>
         </div>
 
-        <!-- Footer Note -->
-        <div id="result-note"><b>Note:</b> Always confirm dates and centers with your respective college/center administration.</div>
-                <div id="result-branding">Powered by University Updates</div>
+        <div class="text-center mt-8">
+            <p class="text-xs text-gray-500">
+                <strong>Important:</strong> This tool requires all 13 <code>VIVA CENTER.xlsx - ... .csv</code> files
+                to be in the same directory as this HTML file to function correctly.
+            </p>
+        </div>
 
     </div>
 
@@ -209,6 +182,7 @@
         };
 
         // Get all DOM elements
+        // Changed: Added new elements
         const dom = {
             initialLoader: document.getElementById('initialLoader'),
             mainContent: document.getElementById('mainContent'),
@@ -224,7 +198,12 @@
             errorMessage: document.getElementById('errorMessage'),
             resultCenter: document.getElementById('resultCenter'),
             resultDate: document.getElementById('resultDate'),
-            resultTime: document.getElementById('resultTime')
+            resultTime: document.getElementById('resultTime'),
+            // Added: New DOM elements
+            headerBranding: document.getElementById('header-branding'),
+            resultBranding: document.getElementById('result-branding'),
+            resultCourse: document.getElementById('resultCourse'),
+            resultCollege: document.getElementById('resultCollege')
         };
 
         /**
@@ -418,6 +397,7 @@
          * 5. Handle College Change
          * Finds and displays the final viva details.
          */
+        // Changed: Added logic to populate new result fields
         function handleCollegeChange() {
             const selectedCollege = dom.collegeSelect.value;
             const selectedSubjectCode = dom.subjectSelect.value;
@@ -432,6 +412,15 @@
             );
 
             if (result) {
+                // Added: Get selected text for course and college
+                const selectedCourseText = dom.subjectSelect.options[dom.subjectSelect.selectedIndex].text;
+                const selectedCollegeText = dom.collegeSelect.options[dom.collegeSelect.selectedIndex].text;
+
+                // Added: Populate new confirmation fields
+                dom.resultCourse.textContent = selectedCourseText || 'N/A';
+                dom.resultCollege.textContent = selectedCollegeText || 'N/A';
+                
+                // Populate viva details
                 dom.resultCenter.textContent = result['Name of Center'] || 'N/A';
                 dom.resultDate.textContent = result.Date || 'N/A';
                 dom.resultTime.textContent = result.Time || 'N/A';
@@ -504,6 +493,27 @@
                 console.error("Failed to load all data:", error);
             }
         }
+        
+        /**
+         * 7. Added: Update Live Date & Time
+         * Updates the branding elements with the current date and time.
+         */
+        function updateLiveDateTime() {
+            const now = new Date();
+            // Using en-IN locale for India-specific date/time format
+            const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+            const dateTimeString = now.toLocaleString('en-IN', options);
+
+            const brandingText = `Powered by University Updates | ${dateTimeString}`;
+            
+            if (dom.headerBranding) {
+                dom.headerBranding.textContent = brandingText;
+            }
+            if (dom.resultBranding) {
+                dom.resultBranding.textContent = brandingText;
+            }
+        }
+
 
         // --- Initial Setup ---
         document.addEventListener('DOMContentLoaded', () => {
@@ -515,6 +525,10 @@
             
             // Load all data
             loadAllData();
+
+            // Added: Set up live date/time
+            updateLiveDateTime();
+            setInterval(updateLiveDateTime, 60000); // Update every minute
         });
     </script>
 </body>
